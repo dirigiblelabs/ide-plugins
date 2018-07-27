@@ -31,15 +31,13 @@
 </head>
 
 <body ng-controller="PluginsController">
-	
+	<div class="container">
 			<div ng-repeat="next in depots">
-				<hr>
 				<h4>
-					<label>Name:</label> {{next.depots.name}}
-					<label>Depot:</label> {{next.depots.depot}}
+					<label>Depot:</label> <a href="{{next.depot}}" title="{{next.depot}}" target="_blank">{{next.name}}</a>
 				</h4>
 				<h4>
-					<i>{{next.depots.description}}</i>
+					<i>{{next.description}}</i>
 				</h4>
 				<hr>
 				<td>
@@ -47,29 +45,23 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Location</th>
-								<th>Module</th>
-								<th>Description</th>
-								<!--
-								<th>Created By</th>
-								<th>Created At</th>
-								-->
+								<th>Name</th>
+								<th>Version</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="plugin in next.plugins">
 								<td>{{$index + 1}}</td>
-								<td>{{plugin.name}}</td>
-								<td>{{plugin.repository}}</td>
-								<td>{{plugin.description}}</td>
+								<td><a href="{{plugin.site}}" title="{{plugin.description}}" target="_blank">{{plugin.name}}</a></td>
 								<td>{{plugin.version}}</td>
-								<td>{{plugin.site}}</td>
+								<td><a class="btn btn-primary btn-xs" href="/services/v3/web/ide-git/index.html?repository={{plugin.repository}}" title="Install {{plugin.name}}" target="_blank">install</a></td>
 							</tr>
 						</tbody>
 					</table>
 				</td>
 			</div>
-		
+	</div>	
 
 	<script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular.min.js"></script>
 	<script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular-resource.min.js"></script>
@@ -77,7 +69,7 @@
 		angular.module('plugins', []);
 		angular.module('plugins').controller('PluginsController', function ($scope, $http) {
 		
-		    var pluginsApi = '/services/v3/core/plugins';
+		    var pluginsApi = 'http://www.dirigible.io/depots.json';
 		
 		    function loadPlugins() {
 		        $http.get(pluginsApi)
