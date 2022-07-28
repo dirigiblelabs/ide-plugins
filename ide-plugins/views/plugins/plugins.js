@@ -20,15 +20,9 @@ pluginsView.controller('PluginsController', ['$scope', '$http', 'messageHub', fu
 	let pluginsApi = '/services/v4/js/ide-plugins/views/plugins/plugins-service.js';
 
 	function loadPlugins() {
-		$http.get(pluginsApi + "?url=https://www.dirigible.io/depots.json")
+		$http.get(pluginsApi)
 			.then(function (data) {
 				$scope.depots = data.data;
-				$scope.depots.forEach(function (depot) {
-					$http.get(pluginsApi + "?url=" + depot.depot)
-						.then(function (data) {
-							depot.plugins = data.data;
-						});
-				});
 			});
 	}
 
